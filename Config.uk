@@ -53,7 +53,6 @@ endif
 config LIBGCOV
        bool "libgcov - A Profiling Library"
        default n
-       select LIBPTHREAD_EMBEDDED
        select LIBCOMPILER_RT
        select LIBCXX
        select LIBCXXABI

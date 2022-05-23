@@ -47,7 +47,7 @@ $(eval $(call addlib_s,libgcov,$(CONFIG_LIBGCOV)))
 ################################################################################
 # Original sources
 ################################################################################
-LIBGCC_VERSION=7.3.0
+LIBGCC_VERSION=7.5.0
 LIBGCC_URL=https://ftp.gnu.org/gnu/gcc/gcc-$(LIBGCC_VERSION)/gcc-$(LIBGCC_VERSION).tar.gz
 LIBGCC_SUBDIR=gcc-$(LIBGCC_VERSION)
 $(eval $(call fetch,libgcc,$(LIBGCC_URL)))
@@ -141,15 +141,10 @@ LIBFFI_SRCS-$(CONFIG_ARCH_X86_64) += $(LIBFFI_EXTRACTED)/src/x86/unix64.S
 LIBGCOV_CINCLUDES-y = -I$(LIBGCC_BASE)/libgcov/include  -I$(LIBGCC_EXTRACTED)/include \
 		-I$(LIBGCC_EXTRACTED)/gcc -I$(LIBGCC_EXTRACTED)/libgcc
 
-LIBGCOV_CFLAGS-y += -DIN_LIBGCC2 -fbuilding-libgcc -fno-stack-protector -fno-test-coverage -fno-profile-arcs \
-	-DHAVE_CC_TLS -DL_gcov_merge_add -DL_gcov_merge_single -DL_gcov_merge_ior -DL_gcov_merge_time_profile -DL_gcov_merge_icall_topn \
-	-DL_gcov_interval_profiler -DL_gcov_interval_profiler_atomic -DL_gcov_pow2_profiler -DL_gcov_pow2_profiler_atomic \
-	-DL_gcov_one_value_profiler -DL_gcov_one_value_profiler_atomic -DL_gcov_average_profiler -DL_gcov_average_profiler_atomic \
-	-DL_gcov_ior_profiler -DL_gcov_ior_profiler_atomic -DL_gcov_indirect_call_profiler_v2 -DL_gcov_time_profiler \
-	-DL_gcov_indirect_call_topn_profiler -DL_gcov_dump -DL_gcov_flush -DL_gcov_fork -DL_gcov_execl -DL_gcov_execlp -DL_gcov_execle \
-	-DL_gcov_execv -DL_gcov_execvp -DL_gcov_execve -DL_gcov_reset -DL_gcov
+LIBGCOV_CFLAGS-y += -DL_gcov -DIN_LIBGCC2 \
+	-DL_gcov_reset -DL_gcov_merge_add \
+	-fno-test-coverage -fno-profile-arcs
 
 LIBGCOV_SRCS-y += $(LIBGCC_EXTRACTED)/libgcc/libgcov-merge.c
-LIBGCOV_SRCS-y += $(LIBGCC_EXTRACTED)/libgcc/libgcov-profiler.c
-LIBGCOV_SRCS-y += $(LIBGCC_EXTRACTED)/libgcc/libgcov-interface.c
+LIBGCOV_SRCS-y += $(LIBGCC_BASE)/libgcov/libgcov-interface.c
 LIBGCOV_SRCS-y += $(LIBGCC_EXTRACTED)/libgcc/libgcov-driver.c
