@@ -26,30 +26,6 @@ config LIBFFI
 if LIBFFI
 endif
 
-config COVERAGE
-	bool "Collect coverage information"
-	default n
-	help
-		Add instrumentation tokens at build time to collect coverage
-		information. This is usually in the form of counters each
-		time a basic block (BB) is encountered in the control flow
-		graph (CFG).
-
-if COVERAGE
-	choice
-		prompt "Coverage tool"
-		default COVERAGE_TOOL_GCOV
-		help
-			Choose coverage mechanism.
-
-		config COVERAGE_TOOL_GCOV
-			bool "gcov"
-			help
-				Enable Gcov-based coverage collection.
-			select LIBGCOV
-	endchoice
-endif
-
 config LIBGCOV
        bool "libgcov - A Profiling Library"
        default n
